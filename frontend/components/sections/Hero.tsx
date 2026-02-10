@@ -25,7 +25,7 @@ export default function Hero() {
       </div>
 
       {/* Content Overlay */}
-      <div className="relative z-10 h-full w-full flex flex-col justify-center items-center pointer-events-none">
+      <div className="relative z-50 h-full w-full flex flex-col justify-center items-center pointer-events-none">
         <motion.div 
           style={{ y, opacity }} 
           className="text-center space-y-4 px-4 sticky top-1/2 -translate-y-1/2"
@@ -34,7 +34,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-6xl md:text-8xl font-heading font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60"
+            className="text-5xl md:text-8xl font-heading font-bold text-transparent bg-clip-text bg-gradient-to-b from-foreground to-foreground/60"
           >
             Sandeep Giri
           </motion.h1>
@@ -43,7 +43,7 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-xl md:text-2xl text-muted font-light tracking-wide"
+            className="text-lg md:text-2xl text-muted-foreground font-light tracking-wide"
           >
             Building digital experiences that matter
           </motion.p>

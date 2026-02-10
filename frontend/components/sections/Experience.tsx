@@ -18,8 +18,8 @@ export default function Experience() {
     <Section id="skills" className="px-6 md:px-20 py-20 bg-secondary/30">
         <div className="grid md:grid-cols-2 gap-16">
             <div>
-                <h2 className="text-4xl md:text-6xl font-heading font-bold mb-8">Capabilities</h2>
-                <p className="text-muted text-lg mb-8">
+                <h2 className="text-3xl md:text-6xl font-heading font-bold mb-8 text-foreground">Capabilities</h2>
+                <p className="text-muted-foreground text-lg mb-8">
                     My technical expertise spans across the entire frontend spectrum, from pixel-perfect UI implementation to complex 3D visualizations.
                 </p>
                 <div className="space-y-8">

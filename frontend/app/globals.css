@@ -1,20 +1,38 @@
 @import "tailwindcss";
 
-:root {
-  /* Dark Theme Default */
-  --background: #050505;
-  --foreground: #fafafa;
-  --primary: #c0c0c0;
-  /* Soft Silver/White */
-  --secondary: #1a1a1a;
-  --accent: #3b82f6;
-  /* Subtle Blue Accent */
+@layer base {
+  :root {
+    /* Light Theme Default */
+    --background: #ffffff;
+    --foreground: #050505;
+    --primary: #1a1a1a;
+    /* Deep Charcoal */
+    --secondary: #f3f4f6;
+    /* Soft Gray */
+    --accent: #2563eb;
+    /* Vibrant Blue */
+    --muted: #6b7280;
+    /* Cool Gray */
+    --border: #e5e7eb;
+    /* Light Gray Border */
 
-  --muted: #404040;
-  --border: #262626;
+    --font-sans: 'Inter', sans-serif;
+    --font-heading: 'Outfit', sans-serif;
+  }
 
-  --font-sans: 'Inter', sans-serif;
-  --font-heading: 'Outfit', sans-serif;
+  .dark {
+    /* Dark Theme */
+    --background: #050505;
+    --foreground: #fafafa;
+    --primary: #c0c0c0;
+    /* Soft Silver/White */
+    --secondary: #1a1a1a;
+    --accent: #3b82f6;
+    /* Subtle Blue Accent */
+
+    --muted: #404040;
+    --border: #262626;
+  }
 }
 
 @theme inline {

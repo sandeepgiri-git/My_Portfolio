@@ -83,16 +83,16 @@ export default function Contact() {
              viewport={{ once: true }}
              transition={{ duration: 0.8 }}
           >
-            <h2 className="text-5xl md:text-7xl font-heading font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
+            <h2 className="text-4xl md:text-7xl font-heading font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/60">
               Let's Create<br />Something <span className="text-accent">Epic.</span>
             </h2>
-            <p className="text-xl text-muted max-w-lg leading-relaxed">
+            <p className="text-lg md:text-xl text-muted-foreground max-w-lg leading-relaxed">
               Whether you have a groundbreaking idea or just want to say hi, my inbox is always open. Let's build the future together.
             </p>
           </motion.div>
 
           {/* Social Links removed and moved to About section */}
-          <div className="flex flex-col space-y-2 text-muted mt-10">
+          <div className="flex flex-col space-y-2 text-muted-foreground mt-10">
               <span className="text-sm uppercase tracking-widest font-bold opacity-50">Contact Details</span>
               <a href="mailto:hello@example.com" className="text-xl hover:text-accent transition-colors">sandeepgiri9634@gmail.com</a>
               <span className="text-lg">Indore, India</span>
@@ -117,7 +117,7 @@ export default function Contact() {
                 rotateY, 
                 transformStyle: "preserve-3d" 
             }}
-            className="relative bg-white/5 backdrop-blur-xl border border-white/10 p-8 md:p-10 rounded-3xl shadow-2xl overflow-hidden group"
+            className="relative bg-secondary/10 backdrop-blur-xl border border-border/50 p-6 md:p-10 rounded-3xl shadow-2xl overflow-hidden group"
           >
              {/* Cursor Glow */}
              <div 
@@ -132,37 +132,37 @@ export default function Contact() {
 
              <form className="space-y-6 relative z-10" style={{ transform: "translateZ(20px)" }}>
                 <div className="group">
-                    <label className={`block text-sm font-medium transition-colors duration-300 ${focused === 'name' ? 'text-accent' : 'text-muted'}`}>Your Name</label>
+                    <label className={`block text-sm font-medium transition-colors duration-300 ${focused === 'name' ? 'text-accent' : 'text-muted-foreground'}`}>Your Name</label>
                     <motion.input 
                         whileFocus={{ scale: 1.02, x: 5 }}
                         type="text" 
                         onFocus={() => setFocused('name')}
                         onBlur={() => setFocused(null)}
-                        className="w-full bg-transparent border-b border-border py-3 focus:outline-none focus:border-accent transition-all duration-300 text-lg placeholder-white/20 relative z-20"
+                        className="w-full bg-transparent border-b border-border py-3 focus:outline-none focus:border-accent transition-all duration-300 text-lg placeholder-muted-foreground/20 text-foreground relative z-20"
                         placeholder="John Doe"
                     />
                 </div>
                 
                 <div className="group">
-                    <label className={`block text-sm font-medium transition-colors duration-300 ${focused === 'email' ? 'text-accent' : 'text-muted'}`}>Email Address</label>
+                    <label className={`block text-sm font-medium transition-colors duration-300 ${focused === 'email' ? 'text-accent' : 'text-muted-foreground'}`}>Email Address</label>
                     <motion.input 
                         whileFocus={{ scale: 1.02, x: 5 }}
                         type="email"
                         onFocus={() => setFocused('email')}
                         onBlur={() => setFocused(null)}
-                        className="w-full bg-transparent border-b border-border py-3 focus:outline-none focus:border-accent transition-all duration-300 text-lg placeholder-white/20 relative z-20"
+                        className="w-full bg-transparent border-b border-border py-3 focus:outline-none focus:border-accent transition-all duration-300 text-lg placeholder-muted-foreground/20 text-foreground relative z-20"
                         placeholder="john@example.com"
                     />
                 </div>
 
                 <div className="group">
-                    <label className={`block text-sm font-medium transition-colors duration-300 ${focused === 'message' ? 'text-accent' : 'text-muted'}`}>Message</label>
+                    <label className={`block text-sm font-medium transition-colors duration-300 ${focused === 'message' ? 'text-accent' : 'text-muted-foreground'}`}>Message</label>
                     <motion.textarea 
                         whileFocus={{ scale: 1.02, x: 5 }}
                         rows={4}
                         onFocus={() => setFocused('message')}
                         onBlur={() => setFocused(null)}
-                        className="w-full bg-transparent border-b border-border py-3 focus:outline-none focus:border-accent transition-all duration-300 text-lg resize-none placeholder-white/20 relative z-20"
+                        className="w-full bg-transparent border-b border-border py-3 focus:outline-none focus:border-accent transition-all duration-300 text-lg resize-none placeholder-muted-foreground/20 text-foreground relative z-20"
                         placeholder="Tell me about your project..."
                     />
                 </div>

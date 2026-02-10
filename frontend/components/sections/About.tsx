@@ -73,7 +73,7 @@ export default function About() {
                 transition={{ duration: 0.8 }}
             >
                 <div className="flex items-center gap-4 mb-6">
-                    <h2 className="text-4xl md:text-5xl font-heading font-bold">About Me</h2>
+                    <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground">About Me</h2>
                     <a 
                         href="/resume.pdf" 
                         download="Sandeep_Giri_Resume.pdf"
@@ -83,20 +83,20 @@ export default function About() {
                     </a>
                 </div>
                 
-                <p className="text-muted text-lg leading-relaxed mb-6">
+                <p className="text-muted-foreground text-lg leading-relaxed mb-6">
                     I’m Sandeep Giri, a final-year Full-Stack Developer specializing in MERN and Next.js, focused on building performant, scalable, and user-centric web applications. I enjoy working across the stack, from crafting clean UIs to implementing efficient backend logic.
                 </p>
-                <p className="text-muted text-lg leading-relaxed">
+                <p className="text-muted-foreground text-lg leading-relaxed">
                   My development approach is driven by strong problem-solving and DSA fundamentals, helping me write optimized and maintainable code.
                 </p>
             </motion.div>
 
             {/* Education Section */}
             <div>
-                <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                <h3 className="text-2xl font-bold mb-6 flex items-center gap-2 text-foreground">
                     <span className="w-8 h-[2px] bg-accent"></span> Education
                 </h3>
-                <div className="space-y-8 border-l-2 border-white/10 pl-8 ml-3 relative">
+                <div className="space-y-8 border-l-2 border-border pl-8 ml-3 relative">
                     {education.map((edu, index) => (
                         <motion.div 
                             key={index}
@@ -109,7 +109,7 @@ export default function About() {
                             <span className="absolute -left-[39px] top-1 h-4 w-4 rounded-full bg-background border-2 border-accent group-hover:bg-accent transition-colors duration-300 shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
                             <span className="text-xs text-accent font-bold tracking-widest uppercase mb-1 block opacity-80">{edu.year}</span>
                             <h4 className="text-xl font-bold text-foreground group-hover:text-accent transition-colors duration-300">{edu.degree}</h4>
-                            <p className="text-muted text-sm mt-1">{edu.institution}</p>
+                            <p className="text-muted-foreground text-sm mt-1">{edu.institution}</p>
                         </motion.div>
                     ))}
                 </div>

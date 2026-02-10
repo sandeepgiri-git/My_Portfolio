@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import { cn } from "@/lib/utils";
 
@@ -27,9 +28,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn(inter.variable, outfit.variable)}>
+    <html lang="en" className={cn(inter.variable, outfit.variable)} suppressHydrationWarning>
       <body className="bg-background text-foreground antialiased font-sans overflow-x-hidden selection:bg-accent/30 selection:text-white">
-        <SmoothScroll>{children}</SmoothScroll>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SmoothScroll>{children}</SmoothScroll>
+        </ThemeProvider>
       </body>
     </html>
   );

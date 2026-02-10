@@ -1,12 +1,21 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Float, Environment, ContactShadows, Text } from "@react-three/drei";
 import * as THREE from "three";
+import { useTheme } from "next-themes";
 
 export default function HeroExperience() {
   const meshRef = useRef<THREE.Group>(null);
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDark = !mounted || theme === 'dark';
   
   useFrame((state) => {
     if (!meshRef.current) return;
@@ -28,7 +37,7 @@ export default function HeroExperience() {
           <mesh position={[0, 0, 0]}>
             <icosahedronGeometry args={[1.5, 0]} />
             <meshStandardMaterial
-              color="#1a1a1a"
+              color={isDark ? "#1a1a1a" : "#e5e7eb"}
               roughness={0.1}
               metalness={0.8}
               wireframe
@@ -37,7 +46,7 @@ export default function HeroExperience() {
           <mesh position={[0, 0, 0]}>
             <icosahedronGeometry args={[1.48, 0]} />
             <meshStandardMaterial
-              color="#000"
+              color={isDark ? "#000" : "#ffffff"}
               roughness={0.2}
               metalness={1}
             />
@@ -46,12 +55,12 @@ export default function HeroExperience() {
           {/* Floating Orbiting Elements */}
           <mesh position={[2.5, 1, -1]}>
             <torusGeometry args={[0.3, 0.1, 16, 32]} />
-            <meshStandardMaterial color="#3b82f6" emissive="#3b82f6" emissiveIntensity={2} />
+            <meshStandardMaterial color={isDark ? "#3b82f6" : "#2563eb"} emissive={isDark ? "#3b82f6" : "#2563eb"} emissiveIntensity={2} />
           </mesh>
           
            <mesh position={[-2, -1.5, 0.5]}>
             <sphereGeometry args={[0.2, 32, 32]} />
-            <meshStandardMaterial color="#c0c0c0" metalness={0.8} roughness={0.2} />
+            <meshStandardMaterial color={isDark ? "#c0c0c0" : "#4b5563"} metalness={0.8} roughness={0.2} />
           </mesh>
         </Float>
       </group>

@@ -94,14 +94,14 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
             <h3 className="text-3xl font-heading font-bold text-white mb-2 leading-tight">{project.title}</h3>
             
             {/* Tech Stack Chips */}
-            <div className="flex flex-wrap gap-2 mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+            <div className="flex flex-wrap gap-2 mb-6 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 delay-100">
                 {project.tech.map((t, i) => (
                     <span key={i} className="text-xs text-muted/80 bg-black/50 px-2 py-1 rounded">#{t}</span>
                 ))}
             </div>
 
             {/* Buttons */}
-            <div className="flex gap-4 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200 translate-y-4 group-hover:translate-y-0">
+            <div className="flex gap-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-500 delay-200 translate-y-0 md:translate-y-4 md:group-hover:translate-y-0">
                 <a href={project.links.code} className="flex-1 flex items-center justify-center gap-2 bg-white text-black font-bold py-3 rounded-xl hover:bg-gray-200 transition-colors">
                     <FaGithub /> Code
                 </a>
@@ -125,8 +125,8 @@ export default function Projects() {
             viewport={{ once: true }}
             className="text-center mb-16"
         >
-            <h2 className="text-4xl md:text-6xl font-heading font-bold mb-4">Selected Works</h2>
-            <p className="text-muted text-lg max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-6xl font-heading font-bold mb-4 text-foreground">Selected Works</h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
                 A collection of projects exploring the boundaries of design and technology.
             </p>
         </motion.div>
