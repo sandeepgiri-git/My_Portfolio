@@ -36,7 +36,7 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-6xl md:text-8xl font-heading font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60"
           >
-            Creative Developer
+            Sandeep Giri
           </motion.h1>
           
           <motion.p 

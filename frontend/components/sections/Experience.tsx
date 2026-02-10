@@ -5,9 +5,12 @@ import { motion } from "framer-motion";
 
 const skills = [
   { name: "Frontend Development", level: 95 },
-  { name: "Three.js / WebGL", level: 85 },
-  { name: "React / Next.js", level: 90 },
+  { name: "Backend Development", level: 85 },
+  { name: "3D Graphics / WebGL", level: 75 },
   { name: "UI/UX Design", level: 80 },
+  { name: "DevOps / Cloud", level: 70 },
+  { name: "Machine Learning Concepts", level: 60 },
+  { name: "System Design", level: 75 },
 ];
 
 export default function Experience() {

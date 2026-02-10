@@ -1,23 +1,71 @@
 "use client";
 
 import Section from "@/components/ui/Section";
-import { motion } from "framer-motion";
-import { useState } from "react";
-import { FaLinkedin, FaInstagram, FaTwitter, FaGithub, FaHackerrank } from "react-icons/fa";
-import { SiLeetcode, SiGeeksforgeeks } from "react-icons/si";
-
-const socialLinks = [
-  { name: "LinkedIn", icon: FaLinkedin, url: "#", color: "hover:text-blue-500" },
-  { name: "Instagram", icon: FaInstagram, url: "#", color: "hover:text-pink-500" },
-  { name: "Twitter", icon: FaTwitter, url: "#", color: "hover:text-sky-500" },
-  { name: "GitHub", icon: FaGithub, url: "#", color: "hover:text-white" },
-  { name: "LeetCode", icon: SiLeetcode, url: "#", color: "hover:text-yellow-500" },
-  { name: "GeeksforGeeks", icon: SiGeeksforgeeks, url: "#", color: "hover:text-green-500" },
-  { name: "HackerRank", icon: FaHackerrank, url: "#", color: "hover:text-green-400" },
-];
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
 
 export default function Contact() {
   const [focused, setFocused] = useState<string | null>(null);
+  const formRef = useRef<HTMLDivElement>(null);
+
+  // 3D Tilt Effect
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x);
+  const mouseYSpring = useSpring(y);
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["5deg", "-5deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-5deg", "5deg"]);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!formRef.current) return;
+    const rect = formRef.current.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  // Cursor Glow Effect
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [showGlow, setShowGlow] = useState(false);
+
+  useEffect(() => {
+    const handleWindowMouseMove = (e: MouseEvent) => {
+        if (formRef.current) {
+            const rect = formRef.current.getBoundingClientRect();
+            setCursorPosition({
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top,
+            });
+            setShowGlow(true);
+        }
+    };
+
+    const formElement = formRef.current;
+    if(formElement){
+        formElement.addEventListener('mousemove', handleWindowMouseMove as any);
+        formElement.addEventListener('mouseleave', () => setShowGlow(false));
+    }
+
+    return () => {
+        if(formElement){
+            formElement.removeEventListener('mousemove', handleWindowMouseMove as any);
+            formElement.removeEventListener('mouseleave', () => setShowGlow(false));
+        }
+    };
+  }, []);
+
 
   return (
     <Section id="contact" className="px-6 md:px-20 py-20 relative overflow-hidden min-h-screen flex items-center">
@@ -27,7 +75,7 @@ export default function Contact() {
 
       <div className="grid lg:grid-cols-2 gap-16 w-full max-w-7xl mx-auto items-center">
         
-        {/* Left Side: Text & Socials */}
+        {/* Left Side: Text */}
         <div className="space-y-10">
           <motion.div
              initial={{ opacity: 0, x: -50 }}
@@ -43,88 +91,92 @@ export default function Contact() {
             </p>
           </motion.div>
 
-          {/* Social Links Grid */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="grid grid-cols-4 sm:grid-cols-7 gap-4"
-          >
-            {socialLinks.map((social, index) => (
-              <a
-                key={index}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`flex items-center justify-center w-12 h-12 rounded-xl bg-white/5 border border-white/10 transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 ${social.color} group`}
-                aria-label={social.name}
-              >
-                 <social.icon size={20} className="transition-opacity opacity-70 group-hover:opacity-100" />
-              </a>
-            ))}
-          </motion.div>
-          
-           <div className="flex flex-col space-y-2 text-muted">
+          {/* Social Links removed and moved to About section */}
+          <div className="flex flex-col space-y-2 text-muted mt-10">
               <span className="text-sm uppercase tracking-widest font-bold opacity-50">Contact Details</span>
-              <a href="mailto:hello@example.com" className="text-xl hover:text-accent transition-colors">hello@example.com</a>
-              <span className="text-lg">San Francisco, CA</span>
+              <a href="mailto:hello@example.com" className="text-xl hover:text-accent transition-colors">sandeepgiri9634@gmail.com</a>
+              <span className="text-lg">Indore, India</span>
            </div>
         </div>
 
-        {/* Right Side: Advanced Form */}
+        {/* Right Side: Advanced Form with 3D Tilt and Glow */}
         <motion.div
            initial={{ opacity: 0, scale: 0.95 }}
            whileInView={{ opacity: 1, scale: 1 }}
            viewport={{ once: true }}
            transition={{ duration: 0.8 }}
-           className="relative"
+           className="relative perspective-1000"
         >
           {/* Form Card */}
-          <div className="relative bg-white/5 backdrop-blur-xl border border-white/10 p-8 md:p-10 rounded-3xl shadow-2xl overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-b before:from-white/5 before:to-transparent before:pointer-events-none">
-             
-             <form className="space-y-6 relative z-10">
+          <motion.div 
+            ref={formRef}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            style={{ 
+                rotateX, 
+                rotateY, 
+                transformStyle: "preserve-3d" 
+            }}
+            className="relative bg-white/5 backdrop-blur-xl border border-white/10 p-8 md:p-10 rounded-3xl shadow-2xl overflow-hidden group"
+          >
+             {/* Cursor Glow */}
+             <div 
+                className="absolute w-[300px] h-[300px] bg-accent/20 rounded-full blur-[80px] pointer-events-none transition-opacity duration-500"
+                style={{
+                    left: cursorPosition.x,
+                    top: cursorPosition.y,
+                    transform: 'translate(-50%, -50%)',
+                    opacity: showGlow ? 1 : 0
+                }}
+             />
+
+             <form className="space-y-6 relative z-10" style={{ transform: "translateZ(20px)" }}>
                 <div className="group">
                     <label className={`block text-sm font-medium transition-colors duration-300 ${focused === 'name' ? 'text-accent' : 'text-muted'}`}>Your Name</label>
-                    <input 
+                    <motion.input 
+                        whileFocus={{ scale: 1.02, x: 5 }}
                         type="text" 
                         onFocus={() => setFocused('name')}
                         onBlur={() => setFocused(null)}
-                        className="w-full bg-transparent border-b border-border py-3 focus:outline-none focus:border-accent transition-all duration-300 text-lg placeholder-white/20"
+                        className="w-full bg-transparent border-b border-border py-3 focus:outline-none focus:border-accent transition-all duration-300 text-lg placeholder-white/20 relative z-20"
                         placeholder="John Doe"
                     />
                 </div>
                 
                 <div className="group">
                     <label className={`block text-sm font-medium transition-colors duration-300 ${focused === 'email' ? 'text-accent' : 'text-muted'}`}>Email Address</label>
-                    <input 
+                    <motion.input 
+                        whileFocus={{ scale: 1.02, x: 5 }}
                         type="email"
                         onFocus={() => setFocused('email')}
                         onBlur={() => setFocused(null)}
-                        className="w-full bg-transparent border-b border-border py-3 focus:outline-none focus:border-accent transition-all duration-300 text-lg placeholder-white/20"
+                        className="w-full bg-transparent border-b border-border py-3 focus:outline-none focus:border-accent transition-all duration-300 text-lg placeholder-white/20 relative z-20"
                         placeholder="john@example.com"
                     />
                 </div>
 
                 <div className="group">
                     <label className={`block text-sm font-medium transition-colors duration-300 ${focused === 'message' ? 'text-accent' : 'text-muted'}`}>Message</label>
-                    <textarea 
+                    <motion.textarea 
+                        whileFocus={{ scale: 1.02, x: 5 }}
                         rows={4}
                         onFocus={() => setFocused('message')}
                         onBlur={() => setFocused(null)}
-                        className="w-full bg-transparent border-b border-border py-3 focus:outline-none focus:border-accent transition-all duration-300 text-lg resize-none placeholder-white/20"
+                        className="w-full bg-transparent border-b border-border py-3 focus:outline-none focus:border-accent transition-all duration-300 text-lg resize-none placeholder-white/20 relative z-20"
                         placeholder="Tell me about your project..."
                     />
                 </div>
 
-                <button 
+                <motion.button 
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.95 }}
                   type="submit"
-                  className="w-full bg-gradient-to-r from-accent to-blue-600 text-white font-bold py-4 rounded-xl hover:opacity-90 transition-all duration-300 shadow-lg shadow-accent/25 transform hover:translate-y-[-2px] active:scale-[0.98]"
+                  className="w-full bg-gradient-to-r from-accent to-blue-600 text-white font-bold py-4 rounded-xl hover:opacity-90 transition-all duration-300 shadow-lg shadow-accent/25 relative z-20"
                 >
                     Send Message
-                </button>
+                </motion.button>
              </form>
-          </div>
+          </motion.div>
         </motion.div>
 
       </div>
