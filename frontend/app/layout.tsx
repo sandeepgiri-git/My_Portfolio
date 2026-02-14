@@ -3,6 +3,9 @@ import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import SmoothScroll from "@/components/ui/SmoothScroll";
+import ScrollProgress from "@/components/ui/ScrollProgress";
+import CustomCursor from "@/components/ui/CustomCursor";
+import BackToTop from "@/components/ui/BackToTop";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({
@@ -36,7 +39,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <ScrollProgress />
+          <CustomCursor />
           <SmoothScroll>{children}</SmoothScroll>
+          <BackToTop />
         </ThemeProvider>
       </body>
     </html>

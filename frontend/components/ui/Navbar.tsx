@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { FiMenu, FiX } from "react-icons/fi";
 import ThemeToggle from "./ThemeToggle";
 
 const navItems = [
@@ -13,7 +12,6 @@ const navItems = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -56,36 +54,10 @@ export default function Navbar() {
           <ThemeToggle />
         </div>
 
-        {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center gap-4">
+        {/* Mobile Theme Toggle (Hamburger Removed) */}
+        <div className="md:hidden flex items-center gap-4 relative z-[70]">
           <ThemeToggle />
-          <button 
-            onClick={() => setIsOpen(!isOpen)}
-            className="text-foreground p-2"
-            aria-label="Toggle Menu"
-          >
-            {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-          </button>
         </div>
-      </div>
-
-      {/* Mobile Menu Overlay */}
-      <div
-        className={cn(
-          "fixed inset-0 bg-background/95 backdrop-blur-lg z-40 md:hidden transition-transform duration-300 ease-in-out flex flex-col items-center justify-center space-y-8",
-          isOpen ? "translate-x-0" : "translate-x-full"
-        )}
-      >
-        {navItems.map((item) => (
-          <Link
-            key={item.name}
-            href={item.href}
-            onClick={() => setIsOpen(false)}
-            className="text-2xl font-heading font-medium text-foreground hover:text-accent transition-colors"
-          >
-            {item.name}
-          </Link>
-        ))}
       </div>
     </nav>
   );

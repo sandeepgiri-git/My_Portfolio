@@ -139,7 +139,7 @@ export default function Contact() {
                         onFocus={() => setFocused('name')}
                         onBlur={() => setFocused(null)}
                         className="w-full bg-transparent border-b border-border py-3 focus:outline-none focus:border-accent transition-all duration-300 text-lg placeholder-muted-foreground/20 text-foreground relative z-20"
-                        placeholder="John Doe"
+                        placeholder="Your Name"
                     />
                 </div>
                 

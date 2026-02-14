@@ -6,10 +6,9 @@ import { motion } from "framer-motion";
 const skills = [
   { name: "Frontend Development", level: 95 },
   { name: "Backend Development", level: 85 },
-  { name: "3D Graphics / WebGL", level: 75 },
-  { name: "UI/UX Design", level: 80 },
+  { name: "Data Structures And Algorithm", level: 90 },
+  { name: "UI/UX Design", level: 75 },
   { name: "DevOps / Cloud", level: 70 },
-  { name: "Machine Learning Concepts", level: 60 },
   { name: "System Design", level: 75 },
 ];
 
@@ -20,7 +19,7 @@ export default function Experience() {
             <div>
                 <h2 className="text-3xl md:text-6xl font-heading font-bold mb-8 text-foreground">Capabilities</h2>
                 <p className="text-muted-foreground text-lg mb-8">
-                    My technical expertise spans across the entire frontend spectrum, from pixel-perfect UI implementation to complex 3D visualizations.
+                    My technical expertise spans across the entire full stack spectrum, from pixel-perfect UI implementation to complex 3D visualizations.
                 </p>
                 <div className="space-y-8">
                     {skills.map((skill, index) => (
