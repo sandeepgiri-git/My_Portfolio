@@ -22,8 +22,10 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Creative Developer Portfolio",
-  description: "A high-end 3D portfolio showcasing creative development work.",
+  title: "Sandeep Giri — Full-Stack Developer & Creative Engineer",
+  description: "Full-Stack Developer specializing in React, Next.js, Node.js, and Three.js. Building performant, scalable digital experiences. Available for freelance projects.",
+  keywords: ["Full-Stack Developer", "React Developer", "Next.js", "Freelance Developer", "Sandeep Giri", "Web Developer India"],
+  authors: [{ name: "Sandeep Giri" }],
 };
 
 export default function RootLayout({

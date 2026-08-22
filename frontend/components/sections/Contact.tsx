@@ -5,6 +5,9 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import { submitContactForm } from "@/actions/submitContact";
 import toast from "react-hot-toast";
+import TextReveal from "@/components/ui/TextReveal";
+import MagneticButton from "@/components/ui/MagneticButton";
+import { FiMail, FiSend } from "react-icons/fi";
 
 export default function Contact() {
   const [focused, setFocused] = useState<string | null>(null);
@@ -100,32 +103,51 @@ export default function Contact() {
   return (
     <Section id="contact" className="px-6 md:px-20 py-20 relative overflow-hidden min-h-screen flex items-center">
       {/* Background decoration */}
-      <div className="absolute top-0 right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] -z-10 animate-pulse" />
-      <div className="absolute bottom-0 left-[-10%] w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[100px] -z-10" />
+      <div className="absolute top-0 right-[-10%] w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] -z-10" />
+      <div className="absolute bottom-0 left-[-10%] w-[500px] h-[500px] bg-accent-secondary/5 rounded-full blur-[100px] -z-10" />
 
-      <div className="grid lg:grid-cols-2 gap-16 w-full max-w-7xl mx-auto items-center">
+      <div className="grid lg:grid-cols-2 gap-16 w-full max-w-6xl mx-auto items-center">
         
         {/* Left Side: Text */}
-        <div className="space-y-10">
+        <div className="space-y-8">
           <motion.div
              initial={{ opacity: 0, x: -50 }}
              whileInView={{ opacity: 1, x: 0 }}
              viewport={{ once: true }}
              transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl md:text-7xl font-heading font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/60">
-              Let's Create<br />Something <span className="text-accent">Epic.</span>
+            <h2 className="text-4xl md:text-7xl font-heading font-bold mb-6">
+              <TextReveal>Let's Build</TextReveal>
+              <br />
+              <span className="text-gradient">
+                <TextReveal delay={0.3}>Something Epic.</TextReveal>
+              </span>
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground max-w-lg leading-relaxed">
-              Whether you have a groundbreaking idea or just want to say hi, my inbox is always open. Let's build the future together.
+              Whether you have a groundbreaking idea, need a freelance developer, or just want to say hi — my inbox is always open.
             </p>
           </motion.div>
 
-          <div className="flex flex-col space-y-2 text-muted-foreground mt-10">
-              <span className="text-sm uppercase tracking-widest font-bold opacity-50">Contact Details</span>
-              <a href="mailto:sandeepgiri9634@gmail.com" className="text-xl hover:text-accent transition-colors">sandeepgiri9634@gmail.com</a>
-              <span className="text-lg">Indore, India</span>
-           </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="space-y-4"
+          >
+            <div className="flex flex-col space-y-3">
+              <span className="text-xs uppercase tracking-[0.3em] font-bold text-muted-foreground/50">Get in touch</span>
+              <MagneticButton href="mailto:sandeepgiri9634@gmail.com" strength={15}>
+                <div className="flex items-center gap-3 text-xl text-foreground hover:text-accent transition-colors group">
+                  <FiMail className="text-accent" />
+                  <span>sandeepgiri9634@gmail.com</span>
+                </div>
+              </MagneticButton>
+              <span className="text-muted-foreground flex items-center gap-2 text-sm">
+                📍 Indore, India
+              </span>
+            </div>
+          </motion.div>
         </div>
 
         {/* Right Side: Advanced Form with 3D Tilt and Glow */}
@@ -134,8 +156,12 @@ export default function Contact() {
            whileInView={{ opacity: 1, scale: 1 }}
            viewport={{ once: true }}
            transition={{ duration: 0.8 }}
-           className="relative perspective-1000"
+           className="relative"
+           style={{ perspective: "1000px" }}
         >
+          {/* Animated gradient border */}
+          <div className="absolute -inset-[1px] rounded-3xl bg-gradient-to-r from-accent via-accent-secondary to-accent bg-[length:200%_100%] animate-aurora opacity-30 blur-sm" />
+          
           {/* Form Card */}
           <motion.div 
             ref={formRef}
@@ -146,11 +172,11 @@ export default function Contact() {
                 rotateY, 
                 transformStyle: "preserve-3d" 
             }}
-            className="relative bg-secondary/10 backdrop-blur-xl border border-border/50 p-6 md:p-10 rounded-3xl shadow-2xl overflow-hidden group"
+            className="relative glass rounded-3xl p-6 md:p-10 shadow-2xl overflow-hidden group"
           >
              {/* Cursor Glow */}
              <div 
-                className="absolute w-[300px] h-[300px] bg-accent/20 rounded-full blur-[80px] pointer-events-none transition-opacity duration-500"
+                className="absolute w-[300px] h-[300px] bg-accent/15 rounded-full blur-[80px] pointer-events-none transition-opacity duration-500"
                 style={{
                     left: cursorPosition.x,
                     top: cursorPosition.y,
@@ -160,59 +186,60 @@ export default function Contact() {
              />
 
              <form onSubmit={handleSubmit} className="space-y-6 relative z-10" style={{ transform: "translateZ(20px)" }}>
-                <div className="group">
-                    <label className={`block text-sm font-medium transition-colors duration-300 ${focused === 'name' ? 'text-accent' : 'text-muted-foreground'}`}>Your Name</label>
+                <div>
+                    <label className={`block text-sm font-medium transition-colors duration-300 mb-2 ${focused === 'name' ? 'text-accent' : 'text-muted-foreground'}`}>Your Name</label>
                     <motion.input 
-                        whileFocus={{ scale: 1.02, x: 5 }}
+                        whileFocus={{ scale: 1.01 }}
                         type="text" 
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         onFocus={() => setFocused('name')}
                         onBlur={() => setFocused(null)}
-                        className="w-full bg-transparent border-b border-border py-3 focus:outline-none focus:border-accent transition-all duration-300 text-lg placeholder-muted-foreground/20 text-foreground relative z-20"
-                        placeholder="Your Name"
+                        className="w-full bg-white/5 border border-border/50 rounded-xl px-4 py-3 focus:outline-none focus:border-accent/50 focus:bg-white/10 transition-all duration-300 text-foreground placeholder-muted-foreground/30"
+                        placeholder="John Doe"
                         disabled={isLoading}
                     />
                 </div>
                 
-                <div className="group">
-                    <label className={`block text-sm font-medium transition-colors duration-300 ${focused === 'email' ? 'text-accent' : 'text-muted-foreground'}`}>Email Address</label>
+                <div>
+                    <label className={`block text-sm font-medium transition-colors duration-300 mb-2 ${focused === 'email' ? 'text-accent' : 'text-muted-foreground'}`}>Email Address</label>
                     <motion.input 
-                        whileFocus={{ scale: 1.02, x: 5 }}
+                        whileFocus={{ scale: 1.01 }}
                         type="email"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         onFocus={() => setFocused('email')}
                         onBlur={() => setFocused(null)}
-                        className="w-full bg-transparent border-b border-border py-3 focus:outline-none focus:border-accent transition-all duration-300 text-lg placeholder-muted-foreground/20 text-foreground relative z-20"
+                        className="w-full bg-white/5 border border-border/50 rounded-xl px-4 py-3 focus:outline-none focus:border-accent/50 focus:bg-white/10 transition-all duration-300 text-foreground placeholder-muted-foreground/30"
                         placeholder="john@example.com"
                         disabled={isLoading}
                     />
                 </div>
 
-                <div className="group">
-                    <label className={`block text-sm font-medium transition-colors duration-300 ${focused === 'message' ? 'text-accent' : 'text-muted-foreground'}`}>Message</label>
+                <div>
+                    <label className={`block text-sm font-medium transition-colors duration-300 mb-2 ${focused === 'message' ? 'text-accent' : 'text-muted-foreground'}`}>Message</label>
                     <motion.textarea 
-                        whileFocus={{ scale: 1.02, x: 5 }}
+                        whileFocus={{ scale: 1.01 }}
                         rows={4}
                         value={formData.description}
                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                         onFocus={() => setFocused('message')}
                         onBlur={() => setFocused(null)}
-                        className="w-full bg-transparent border-b border-border py-3 focus:outline-none focus:border-accent transition-all duration-300 text-lg resize-none placeholder-muted-foreground/20 text-foreground relative z-20"
+                        className="w-full bg-white/5 border border-border/50 rounded-xl px-4 py-3 focus:outline-none focus:border-accent/50 focus:bg-white/10 transition-all duration-300 resize-none text-foreground placeholder-muted-foreground/30"
                         placeholder="Tell me about your project..."
                         disabled={isLoading}
                     />
                 </div>
 
                 <motion.button 
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-gradient-to-r from-accent to-blue-600 text-white font-bold py-4 rounded-xl hover:opacity-90 transition-all duration-300 shadow-lg shadow-accent/25 relative z-20 disabled:opacity-50"
+                  className="w-full bg-gradient-to-r from-accent to-accent-secondary text-white font-bold py-4 rounded-xl hover:opacity-90 transition-all duration-300 shadow-lg shadow-accent/20 flex items-center justify-center gap-2 disabled:opacity-50"
                 >
-                    {isLoading ? "Sending..." : "Send Message"}
+                  <FiSend size={16} />
+                  {isLoading ? "Sending..." : "Send Message"}
                 </motion.button>
              </form>
           </motion.div>
