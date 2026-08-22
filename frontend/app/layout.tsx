@@ -7,6 +7,7 @@ import ScrollProgress from "@/components/ui/ScrollProgress";
 import CustomCursor from "@/components/ui/CustomCursor";
 import BackToTop from "@/components/ui/BackToTop";
 import { cn } from "@/lib/utils";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -43,6 +44,7 @@ export default function RootLayout({
           <CustomCursor />
           <SmoothScroll>{children}</SmoothScroll>
           <BackToTop />
+          <Toaster position="bottom-right" />
         </ThemeProvider>
       </body>
     </html>

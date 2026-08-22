@@ -3,10 +3,16 @@
 import Section from "@/components/ui/Section";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
+import { submitContactForm } from "@/actions/submitContact";
+import toast from "react-hot-toast";
 
 export default function Contact() {
   const [focused, setFocused] = useState<string | null>(null);
   const formRef = useRef<HTMLDivElement>(null);
+  
+  // Form State
+  const [formData, setFormData] = useState({ name: "", email: "", description: "" });
+  const [isLoading, setIsLoading] = useState(false);
 
   // 3D Tilt Effect
   const x = useMotionValue(0);
@@ -66,6 +72,30 @@ export default function Contact() {
     };
   }, []);
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email || !formData.description) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
+    setIsLoading(true);
+    const loadingToast = toast.loading("Sending message...");
+
+    try {
+      const result = await submitContactForm(formData);
+      if (result.success) {
+        toast.success(result.message, { id: loadingToast });
+        setFormData({ name: "", email: "", description: "" });
+      } else {
+        toast.error(result.message, { id: loadingToast });
+      }
+    } catch (error) {
+      toast.error("Something went wrong. Please try again.", { id: loadingToast });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Section id="contact" className="px-6 md:px-20 py-20 relative overflow-hidden min-h-screen flex items-center">
@@ -91,10 +121,9 @@ export default function Contact() {
             </p>
           </motion.div>
 
-          {/* Social Links removed and moved to About section */}
           <div className="flex flex-col space-y-2 text-muted-foreground mt-10">
               <span className="text-sm uppercase tracking-widest font-bold opacity-50">Contact Details</span>
-              <a href="mailto:hello@example.com" className="text-xl hover:text-accent transition-colors">sandeepgiri9634@gmail.com</a>
+              <a href="mailto:sandeepgiri9634@gmail.com" className="text-xl hover:text-accent transition-colors">sandeepgiri9634@gmail.com</a>
               <span className="text-lg">Indore, India</span>
            </div>
         </div>
@@ -130,16 +159,19 @@ export default function Contact() {
                 }}
              />
 
-             <form className="space-y-6 relative z-10" style={{ transform: "translateZ(20px)" }}>
+             <form onSubmit={handleSubmit} className="space-y-6 relative z-10" style={{ transform: "translateZ(20px)" }}>
                 <div className="group">
                     <label className={`block text-sm font-medium transition-colors duration-300 ${focused === 'name' ? 'text-accent' : 'text-muted-foreground'}`}>Your Name</label>
                     <motion.input 
                         whileFocus={{ scale: 1.02, x: 5 }}
                         type="text" 
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         onFocus={() => setFocused('name')}
                         onBlur={() => setFocused(null)}
                         className="w-full bg-transparent border-b border-border py-3 focus:outline-none focus:border-accent transition-all duration-300 text-lg placeholder-muted-foreground/20 text-foreground relative z-20"
                         placeholder="Your Name"
+                        disabled={isLoading}
                     />
                 </div>
                 
@@ -148,10 +180,13 @@ export default function Contact() {
                     <motion.input 
                         whileFocus={{ scale: 1.02, x: 5 }}
                         type="email"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         onFocus={() => setFocused('email')}
                         onBlur={() => setFocused(null)}
                         className="w-full bg-transparent border-b border-border py-3 focus:outline-none focus:border-accent transition-all duration-300 text-lg placeholder-muted-foreground/20 text-foreground relative z-20"
                         placeholder="john@example.com"
+                        disabled={isLoading}
                     />
                 </div>
 
@@ -160,10 +195,13 @@ export default function Contact() {
                     <motion.textarea 
                         whileFocus={{ scale: 1.02, x: 5 }}
                         rows={4}
+                        value={formData.description}
+                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                         onFocus={() => setFocused('message')}
                         onBlur={() => setFocused(null)}
                         className="w-full bg-transparent border-b border-border py-3 focus:outline-none focus:border-accent transition-all duration-300 text-lg resize-none placeholder-muted-foreground/20 text-foreground relative z-20"
                         placeholder="Tell me about your project..."
+                        disabled={isLoading}
                     />
                 </div>
 
@@ -171,9 +209,10 @@ export default function Contact() {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.95 }}
                   type="submit"
-                  className="w-full bg-gradient-to-r from-accent to-blue-600 text-white font-bold py-4 rounded-xl hover:opacity-90 transition-all duration-300 shadow-lg shadow-accent/25 relative z-20"
+                  disabled={isLoading}
+                  className="w-full bg-gradient-to-r from-accent to-blue-600 text-white font-bold py-4 rounded-xl hover:opacity-90 transition-all duration-300 shadow-lg shadow-accent/25 relative z-20 disabled:opacity-50"
                 >
-                    Send Message
+                    {isLoading ? "Sending..." : "Send Message"}
                 </motion.button>
              </form>
           </motion.div>
