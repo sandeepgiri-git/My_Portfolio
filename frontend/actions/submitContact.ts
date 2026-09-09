@@ -22,34 +22,37 @@ export async function submitContactForm(formData: {name: string; email: string; 
     const BREVO_API_KEY = process.env.BREVO_API_KEY;
     const BREVO_SENDER_EMAIL = process.env.BREVO_SENDER_EMAIL;
 
-    if (BREVO_API_KEY && BREVO_SENDER_EMAIL) {
-      const emailData = {
-        sender: { name: "Portfolio Contacts", email: BREVO_SENDER_EMAIL },
-        to: [{ email: BREVO_SENDER_EMAIL, name: "Sandeep Giri" }],
-        subject: `New Contact Submission from ${name}`,
-        htmlContent: `
-          <h3>New Contact Form Submission</h3>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Message:</strong><br/>${description.replace(/\n/g, '<br/>')}</p>
-        `,
-      };
+    if (!BREVO_API_KEY || !BREVO_SENDER_EMAIL) {
+      console.error("Brevo API key or sender email not found in environment variables.");
+      return { success: false, message: "Server configuration error: Missing email provider credentials." };
+    }
 
-      const response = await fetch("https://api.brevo.com/v3/smtp/email", {
-        method: "POST",
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-          "api-key": BREVO_API_KEY,
-        },
-        body: JSON.stringify(emailData),
-      });
+    const emailData = {
+      sender: { name: "Portfolio Contacts", email: BREVO_SENDER_EMAIL },
+      to: [{ email: BREVO_SENDER_EMAIL, name: "Sandeep Giri" }],
+      subject: `New Contact Submission from ${name}`,
+      htmlContent: `
+        <h3>New Contact Form Submission</h3>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Message:</strong><br/>${description.replace(/\n/g, '<br/>')}</p>
+      `,
+    };
 
-      if (!response.ok) {
-        console.error("Failed to send email via Brevo:", await response.text());
-      }
-    } else {
-      console.warn("Brevo API key or sender email not found in environment variables.");
+    const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "api-key": BREVO_API_KEY,
+      },
+      body: JSON.stringify(emailData),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Failed to send email via Brevo:", errorText);
+      return { success: false, message: "Failed to send email. Please try again later." };
     }
 
     return { success: true, message: "Message sent successfully!" };
