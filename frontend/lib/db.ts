@@ -20,6 +20,7 @@ async function connectDB() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
+      serverSelectionTimeoutMS: 5000, // Fail fast if IP is blocked (e.g., Vercel to MongoDB Atlas)
     };
 
     cached.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {

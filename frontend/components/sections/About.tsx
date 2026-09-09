@@ -57,12 +57,19 @@ export default function About() {
       </motion.div>
 
       {/* Bento Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-6xl mx-auto auto-rows-[180px] md:auto-rows-[200px]">
+      <div className="grid grid-cols-1 md:grid-cols-6 gap-4 max-w-6xl mx-auto">
         
-        {/* Bio Card — Large (spans 4 cols, 2 rows) */}
-        <motion.div custom={0} variants={cardVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-          <GlowCard className="md:col-span-4 lg:col-span-4 md:row-span-2 h-full">
-            <div className="glass rounded-2xl p-8 h-full flex flex-col justify-center">
+        {/* Bio Card — spans 4 cols, 2 rows */}
+        <motion.div
+          custom={0}
+          variants={cardVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="md:col-span-4 md:row-span-2"
+        >
+          <GlowCard className="h-full">
+            <div className="glass rounded-2xl p-8 h-full flex flex-col justify-center min-h-[220px] md:min-h-[400px]">
               <h3 className="text-2xl font-heading font-bold mb-4 text-foreground">
                 Hey, I'm <span className="text-gradient">Sandeep</span> 👋
               </h3>
@@ -77,11 +84,16 @@ export default function About() {
         </motion.div>
 
         {/* Profile Photo Card — 2 cols, 2 rows */}
-        <motion.div custom={1} variants={cardVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}
-          className="md:col-span-2 lg:col-span-2 md:row-span-2"
+        <motion.div
+          custom={1}
+          variants={cardVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="md:col-span-2 md:row-span-2"
         >
           <GlowCard className="h-full">
-            <div className="glass rounded-2xl p-4 h-full relative overflow-hidden group">
+            <div className="glass rounded-2xl p-4 h-full relative overflow-hidden group min-h-[280px] md:min-h-[400px]">
               <div className="relative w-full h-full rounded-xl overflow-hidden">
                 <Image
                   src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop"
@@ -99,12 +111,17 @@ export default function About() {
           </GlowCard>
         </motion.div>
 
-        {/* Location Card */}
-        <motion.div custom={2} variants={cardVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}
+        {/* Location Card — 2 cols */}
+        <motion.div
+          custom={2}
+          variants={cardVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
           className="md:col-span-2"
         >
           <GlowCard className="h-full">
-            <div className="glass rounded-2xl p-6 h-full flex flex-col justify-center items-center text-center">
+            <div className="glass rounded-2xl p-6 h-full flex flex-col justify-center items-center text-center min-h-[160px]">
               <FaMapMarkerAlt className="text-accent text-2xl mb-3" />
               <span className="text-lg font-bold text-foreground">Indore, India</span>
               <span className="text-xs text-muted-foreground mt-1">IST (UTC +5:30)</span>
@@ -112,29 +129,39 @@ export default function About() {
           </GlowCard>
         </motion.div>
 
-        {/* Freelance Status Card */}
-        <motion.div custom={3} variants={cardVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}
+        {/* Freelance Status Card — 2 cols */}
+        <motion.div
+          custom={3}
+          variants={cardVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
           className="md:col-span-2"
         >
           <GlowCard className="h-full">
-            <div className="glass rounded-2xl p-6 h-full flex flex-col justify-center items-center text-center">
+            <div className="glass rounded-2xl p-6 h-full flex flex-col justify-center items-center text-center min-h-[160px]">
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse shadow-lg shadow-emerald-400/50" />
                 <span className="text-sm font-bold text-emerald-400 uppercase tracking-wider">Available</span>
               </div>
               <span className="text-lg font-bold text-foreground">Open for Freelance</span>
-              <span className="text-xs text-muted-foreground mt-1">Let's work together</span>
+              <span className="text-xs text-muted-foreground mt-1">Let&apos;s work together</span>
             </div>
           </GlowCard>
         </motion.div>
 
-        {/* Resume Download Card */}
-        <motion.div custom={4} variants={cardVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}
+        {/* Resume Download Card — 2 cols */}
+        <motion.div
+          custom={4}
+          variants={cardVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
           className="md:col-span-2"
         >
           <GlowCard className="h-full">
             <MagneticButton href="/resume.pdf" download="Sandeep_Giri_Resume.pdf" className="h-full block">
-              <div className="glass rounded-2xl p-6 h-full flex flex-col justify-center items-center text-center cursor-pointer group hover:border-accent/30 transition-all duration-300">
+              <div className="glass rounded-2xl p-6 h-full flex flex-col justify-center items-center text-center cursor-pointer group hover:border-accent/30 transition-all duration-300 min-h-[160px]">
                 <FiDownload className="text-accent text-3xl mb-3 group-hover:translate-y-1 transition-transform duration-300" />
                 <span className="text-lg font-bold text-foreground">Download Resume</span>
                 <span className="text-xs text-muted-foreground mt-1">PDF • Updated 2025</span>
@@ -144,11 +171,16 @@ export default function About() {
         </motion.div>
 
         {/* Education Card — spans 4 cols */}
-        <motion.div custom={5} variants={cardVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}
-          className="md:col-span-4 lg:col-span-4"
+        <motion.div
+          custom={5}
+          variants={cardVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="md:col-span-4"
         >
           <GlowCard className="h-full">
-            <div className="glass rounded-2xl p-6 h-full">
+            <div className="glass rounded-2xl p-6 h-full min-h-[160px] flex flex-col justify-center">
               <h3 className="text-sm font-bold text-accent uppercase tracking-widest mb-4 flex items-center gap-2">
                 <span className="w-6 h-[2px] bg-accent" /> Education
               </h3>
@@ -167,11 +199,16 @@ export default function About() {
         </motion.div>
 
         {/* Social Links Card — spans full width */}
-        <motion.div custom={6} variants={cardVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}
-          className="md:col-span-4 lg:col-span-6"
+        <motion.div
+          custom={6}
+          variants={cardVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="md:col-span-6"
         >
           <GlowCard className="h-full">
-            <div className="glass rounded-2xl p-6 h-full flex items-center justify-center">
+            <div className="glass rounded-2xl p-6 h-full flex items-center justify-center min-h-[80px]">
               <div className="flex flex-wrap justify-center gap-3">
                 {socialLinks.map((social, index) => (
                   <motion.a
