@@ -2,12 +2,17 @@
 
 import { useScroll, useTransform, motion, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-import Scene from "@/components/canvas/Scene";
-import HeroExperience from "@/components/canvas/HeroExperience";
+import dynamic from "next/dynamic";
+import useIsMobile from "@/hooks/useIsMobile";
+import HeroBackgroundMobile from "@/components/ui/HeroBackgroundMobile";
 import TextReveal from "@/components/ui/TextReveal";
 import MagneticButton from "@/components/ui/MagneticButton";
 import MarqueeText from "@/components/ui/MarqueeText";
 import { SiReact, SiNextdotjs, SiNodedotjs, SiMongodb, SiTypescript, SiTailwindcss, SiPython, SiDocker, SiGit, SiPostgresql } from "react-icons/si";
+
+// Lazy-load heavy 3D components — they won't be downloaded at all on mobile
+const Scene = dynamic(() => import("@/components/canvas/Scene"), { ssr: false });
+const HeroExperience = dynamic(() => import("@/components/canvas/HeroExperience"), { ssr: false });
 
 const roles = [
   "Full-Stack Developer",
@@ -59,6 +64,7 @@ function RoleRotator() {
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
@@ -69,11 +75,15 @@ export default function Hero() {
 
   return (
     <section id="home" ref={containerRef} className="relative h-screen w-full overflow-hidden">
-      {/* 3D Background */}
+      {/* Background: 3D canvas on desktop, lightweight CSS on mobile */}
       <div className="absolute inset-0 z-0">
-        <Scene className="h-full w-full">
-          <HeroExperience />
-        </Scene>
+        {isMobile ? (
+          <HeroBackgroundMobile />
+        ) : (
+          <Scene className="h-full w-full">
+            <HeroExperience />
+          </Scene>
+        )}
       </div>
 
       {/* Gradient overlays */}
